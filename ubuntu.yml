@@ -32,6 +32,8 @@
           - virtualbox
           - mlocate
           - mtr
+          - fonts-powerline
+          - openconnect
 
     - block:
       - name: Verify if Oh-My-zsh is installed
@@ -51,12 +53,6 @@
           name: '{{ ansible_user_id }}'
           shell: /bin/zsh
 
-      - name: Changing Default ZSH Theme to Agnoster
-        lineinfile:
-          path: /home/{{ ansible_user_id }}/.zshrc
-          regexp: '^ZSH_THEME='
-          line: 'ZSH_THEME="agnoster"'
-
       - name: Creating ZSH Completion folder
         file:
           path: /home/{{ ansible_user_id }}/.oh-my-zsh/completions
@@ -68,7 +64,27 @@
           path: /home/{{ ansible_user_id }}/.zshrc
           line: 'autoload -U compinit && compinit'
           state: present
+
+      - name: Install Power10k
+        become: true
+        git:
+          repo: 'https://github.com/romkatv/powerlevel10k.git'
+          dest: /home/{{ ansible_user_id }}/.oh-my-zsh/themes/powerlevel10k
+
+      - name: enable Power10k theme
+        shell:
+          cmd: echo 'source ~/.oh-my-zsh/themes/powerlevel10k/powerlevel10k.zsh-theme' >>~/.zshrc
+
+      - name: Changing Default ZSH Theme to aphrodite
+        lineinfile:
+          path: /home/{{ ansible_user_id }}/.zshrc
+          regexp: '^ZSH_THEME='
+          line: 'ZSH_THEME="aphrodite"'
       tags: zshrc
+
+
+
+
 
     - name: Installing AWS CLI via pip3
       become: true
@@ -304,6 +320,7 @@
           name: helm
       tags: helm
 
+## Softwares
     - block:
       - name: Install Brave Key
         become: true
@@ -323,3 +340,63 @@
         apt:
           name: brave-browser
       tags: brave
+
+    - block:
+      - name: Install MS Teams
+        become: true
+        apt_key:
+          url: 'https://packages.microsoft.com/keys/microsoft.asc'
+          state: present
+
+      - name: Install MS teams repo
+        become: true
+        apt_repository:
+          repo: 'deb [arch=amd64] https://packages.microsoft.com/repos/ms-teams stable main'
+          state: present
+          filename: teams
+
+      - name: Install MS Teams
+        become: true
+        apt:
+          name: teams
+      tags: teams
+
+    - block:
+      - name: Install Enpass gpg key
+        become: true
+        apt_key:
+          url: 'https://apt.enpass.io/keys/enpass-linux.key'
+          state: present
+
+      - name: Install Enpass repo
+        become: true
+        apt_repository:
+          repo: 'deb https://apt.enpass.io/ stable main'
+          state: present
+          filename: enpass
+
+      - name: Install Enpass app
+        become: true
+        apt:
+          name: enpass
+      tags: enpass
+
+    - block:
+      - name: Install Sublime gpg key
+        become: true
+        apt_key:
+          url: 'https://download.sublimetext.com/sublimehq-pub.gpg'
+          state: present
+
+      - name: Install Sublime repo
+        become: true
+        apt_repository:
+          repo: 'deb https://download.sublimetext.com/ apt/stable/'
+          state: present
+          filename: sublime-text
+
+      - name: Install Sublime app
+        become: true
+        apt:
+          name: sublime-text
+      tags: sublime
