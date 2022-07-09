@@ -1,9 +1,9 @@
-# Workstation Tools
+# My Workstation Tools
 
 This repository contains scripts to automate and speedup the workflow and preparation for my machine.
 
 > **_Disclaimer_** :  
-> Those scripts are ubuntu related with major version 18+, for other distributions you'll need to adapt it
+> Those scripts are ubuntu related with major version 20+, for other distributions you'll need to adapt it
 ___
 
 ## Prepare Workstation
@@ -30,6 +30,6 @@ ___
 GPLv3
 
 # Author Information
-Created by [Caio Delgado](https://linktr.ee/caiodelgadonew)
+Created by [Caio Delgado](https://linktr.ee/caiodelgadonew) adapted by me
 
 Contributions are more than welcome!
