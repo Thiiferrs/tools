@@ -16,7 +16,7 @@ sudo apt update && sudo apt install ansible unzip git -y
 ```
 2. Clone this repository
 ```bash
-git clone https://github.com/caiodelgadonew/tools.git
+git clone https://github.com/thiiferrs/my-tools-playbook.git
 ```
 
 3. Apply the configuration
@@ -30,6 +30,6 @@ ___
 GPLv3
 
 # Author Information
-Created by [Caio Delgado](https://linktr.ee/caiodelgadonew) adapted by me
+Created by [Caio Delgado](https://linktr.ee/caiodelgadonew) adapted by me @thiferrs
 
 Contributions are more than welcome!
