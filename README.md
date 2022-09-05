@@ -30,6 +30,6 @@ ___
 GPLv3
 
 # Author Information
-Created by [Caio Delgado](https://linktr.ee/caiodelgadonew) adapted by me @thiferrs
+Created by [Caio Delgado](https://linktr.ee/caiodelgadonew) adapted by me @thiiferrs
 
 Contributions are more than welcome!
