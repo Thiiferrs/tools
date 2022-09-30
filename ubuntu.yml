@@ -218,6 +218,7 @@
           - bbenoist.vagrant
           - hashicorp.terraform
           - ms-vscode.vscode-node-azure-pack
+          - Youssef.viow
       tags: vscode
 
     - block:
