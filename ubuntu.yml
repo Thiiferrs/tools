@@ -22,7 +22,6 @@
           - gnupg
           - python3-pip
           - make
-          - git
           - bash-completion
           - gnupg-agent
           - zsh
@@ -73,7 +72,7 @@
 
       - name: enable Power10k theme
         shell:
-          cmd: echo 'source ~/.oh-my-zsh/themes/powerlevel10k/powerlevel10k.zsh-theme' >>~/.zshrc
+          cmd: echo 'source ~/.oh-my-zsh/themes/powerlevel10k/powerlevel10k.zsh-theme' >> ~/.zshrc
 
       - name: Changing Default ZSH Theme to aphrodite
         lineinfile:
@@ -81,24 +80,25 @@
           regexp: '^ZSH_THEME='
           line: 'ZSH_THEME="aphrodite"'
           
-    - name: Clone zsh-syntax-highlighting plugin
-      become: true
-      get_url:
-        url: 'https://github.com/zsh-users/zsh-syntax-highlighting.git'
-        dest: '/home/{{ ansible_user_id }}/.oh-my-zsh/plugins/'
+      - name: Clone zsh-syntax-highlighting plugin
+        become: true
+        get_url:
+          url: 'https://github.com/zsh-users/zsh-syntax-highlighting.git'
+          dest: '/home/{{ ansible_user_id }}/.oh-my-zsh/plugins/'
 
-    - name: Install zsh-syntax-highlighting plugin
-      lineinfile:
-        path: /home/{{ ansible_user_id }}/.zshrc
-        line: 'source /home/"{{ ansible_user_id }}"/.zshrc/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh'          
+      - name: Install zsh-syntax-highlighting plugin
+        lineinfile:
+          path: /home/{{ ansible_user_id }}/.zshrc
+          line: 'source /home/"{{ ansible_user_id }}"/.zshrc/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh'          
       tags: zshrc
+      
 #################
     - name: Installing AWS CLI via pip3
       become: true
       pip:
         name: awscli
         executable: pip3
-      tags: awscli
+      tags: aws
 
     - block:
       - name: Install Google Key
@@ -213,11 +213,11 @@
         shell:
           cmd: code --install-extension '{{ item }}'
         loop:
-          - ms-python.python
-          - ms-azuretools.vscode-docker
-          - bbenoist.vagrant
+#          - ms-python.python
+#          - ms-azuretools.vscode-docker
+#          - bbenoist.vagrant
           - hashicorp.terraform
-          - ms-vscode.vscode-node-azure-pack
+#          - ms-vscode.vscode-node-azure-pack
           - Youssef.viow
       tags: vscode
 
@@ -271,7 +271,9 @@
           path: /home/{{ ansible_user_id }}/.zshrc
           regexp: '^plugins='
           line: 'plugins=(git docker docker-compose)'
-      tags: docker
+      tags:
+        - never
+        - docker
 
     - block:
       - name: Installing Kubectl 1.23.0
@@ -303,8 +305,8 @@
           dest: '/home/{{ ansible_user_id }}/.oh-my-zsh/completions/{{ item }}'
           state: link
         with_items:
-          - _kubectx.zsh
-          - _kubens.zsh
+          - kubectx.zsh
+          - kubens.zsh
       tags: kubectl
 
     - block:
@@ -365,7 +367,9 @@
         become: true
         apt:
           name: teams
-      tags: teams
+      tags:
+        - never
+        - teams
 
     - block:
       - name: Install Enpass gpg key
